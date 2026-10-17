@@ -1,0 +1,17 @@
+# Nextrole
+
+> Internship portfolio demonstration of a job discovery app, built with Flutter and optional Supabase authentication and private storage.
+
+This is a portfolio demonstration. Original sample listings are fictional. Employer listings are supplied by approved accounts; moderation does not verify identity or guarantee a vacancy. Private drafts are not sent to employers. Deliberate submission shares the reviewed details and selected résumé version with that company. Do not treat salary figures or company references as hiring claims.
+
+## Public pages
+- [Home](https://nextrolejob.netlify.app/)
+- [privacy](https://nextrolejob.netlify.app/privacy.html)
+- [terms](https://nextrolejob.netlify.app/terms.html)
+- [cookies](https://nextrolejob.netlify.app/cookies.html)
+- [faq](https://nextrolejob.netlify.app/faq.html)
+- [contact](https://nextrolejob.netlify.app/contact.html)
+- [retention](https://nextrolejob.netlify.app/retention.html)
+
+## Privacy
+Do not crawl private account data, drafts, or résumés. Authentication is required for private features. No analytics or advertising trackers are installed.

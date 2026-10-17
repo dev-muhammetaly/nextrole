@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+const config = JSON.parse(fs.readFileSync(path.resolve(import.meta.dirname,'../assets/client_config.json'),'utf8'));
+const base = config.SUPABASE_URL.replace(/\/$/,'');
+const headers = {apikey:config.SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'};
+const settingsResponse = await fetch(`${base}/auth/v1/settings`, {headers});
+assert.equal(settingsResponse.status,200,'Public Auth settings are unreachable');
+const settings = await settingsResponse.json();
+const drafts = await fetch(`${base}/rest/v1/nextrole_drafts?select=job_id&limit=0`,{headers});
+assert.ok([401,403].includes(drafts.status),'Guest draft access must be denied');
+const files = await fetch(`${base}/storage/v1/object/list/nextrole-resumes`,{method:'POST',headers,body:JSON.stringify({prefix:'',limit:1})});
+if (files.ok) assert.deepEqual(await files.json(),[],'Guest must not see private resume metadata');
+else assert.ok([400,401,403,404].includes(files.status),'Unexpected storage API response');
+console.log(JSON.stringify({authReachable:true,emailEnabled:settings.external.email,emailConfirmationRequired:!settings.mailer_autoconfirm,googleEnabled:settings.external.google,appleEnabled:settings.external.apple,guestDraftAccessDenied:true,guestResumeListingEmptyOrDenied:true},null,2));

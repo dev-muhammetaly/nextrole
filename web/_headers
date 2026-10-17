@@ -1,0 +1,10 @@
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+/main.dart.js
+  Cache-Control: public, max-age=0, must-revalidate
+/flutter_bootstrap.js
+  Cache-Control: public, max-age=0, must-revalidate
+/assets/assets/client_config.json
+  Cache-Control: public, max-age=0, must-revalidate

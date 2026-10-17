@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "checkedAt": "2026-10-17T07:27:43.695Z",
+  "checks": [
+    "Real Supabase session consumed by browser callback",
+    "Recovery callback renders new-password and confirmation fields instead of 404",
+    "Test runs on isolated origin without altering real user sessions",
+    "No password was changed; email-link delivery replay remains blocked by email quota"
+  ],
+  "cleanupVerified": true,
+  "cleanupCheckedAt": "2026-10-17T07:28:23.871Z",
+  "testAccounts": 1,
+  "realUserRecordsChanged": false
+}

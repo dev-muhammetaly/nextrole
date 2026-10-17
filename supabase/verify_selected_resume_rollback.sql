@@ -1,0 +1,22 @@
+begin;
+select set_config('nr.c',gen_random_uuid()::text,true),set_config('nr.e',gen_random_uuid()::text,true),set_config('nr.co',gen_random_uuid()::text,true),set_config('nr.j',gen_random_uuid()::text,true),set_config('nr.f',gen_random_uuid()::text,true),set_config('nr.f2',gen_random_uuid()::text,true),set_config('nr.app',gen_random_uuid()::text,true);
+insert into auth.users(id,aud,role,email,raw_user_meta_data) select current_setting('nr.'||x)::uuid,'authenticated','authenticated','rollback-'||gen_random_uuid()||'@example.invalid','{}'::jsonb from unnest(array['c','e']) x;
+update public.nextrole_members set role='employer' where id=current_setting('nr.e')::uuid;
+insert into public.nextrole_companies(id,owner_id,name,status) values(current_setting('nr.co')::uuid,current_setting('nr.e')::uuid,'Rollback company','approved');
+insert into public.nextrole_jobs(id,owner_id,company_id,title,location,salary,description,closes_at,status) values(current_setting('nr.j')::uuid,current_setting('nr.e')::uuid,current_setting('nr.co')::uuid,'Rollback role','Remote','RM 2000 / month','Rollback-only test role description.',current_date+30,'published');
+set local role authenticated;
+select set_config('request.jwt.claims',json_build_object('sub',current_setting('nr.c'),'role','authenticated')::text,true);
+insert into storage.objects(bucket_id,name,metadata) select 'nextrole-resume-library',auth.uid()::text||'/'||current_setting('nr.'||x)||'.pdf','{"mimetype":"application/pdf","size":100}'::jsonb from unnest(array['f','f2']) x;
+select public.nextrole_action('resume_register',jsonb_build_object('id',current_setting('nr.f'),'file_name','Original.pdf','display_name','CV'));
+select public.nextrole_action('resume_register',jsonb_build_object('id',current_setting('nr.f2'),'library_id',current_setting('nr.f'),'file_name','Replacement.pdf','display_name','CV'));
+insert into storage.objects(bucket_id,name,metadata) values('nextrole-application-resumes',auth.uid()::text||'/'||current_setting('nr.app')||'.pdf','{"mimetype":"application/pdf","size":100}');
+select public.nextrole_action('application_submit',jsonb_build_object('id',current_setting('nr.app'),'job_id',current_setting('nr.j'),'full_name','Rollback Candidate','email','rollback@example.invalid','introduction','Selected original version','resume_path',auth.uid()::text||'/'||current_setting('nr.app')||'.pdf','resume_version_id',current_setting('nr.f')));
+select set_config('request.jwt.claims',json_build_object('sub',current_setting('nr.e'),'role','authenticated')::text,true);
+do $$ begin
+ if exists(select 1 from public.nextrole_resume_files where user_id=current_setting('nr.c')::uuid) then raise exception 'Employer browses private library'; end if;
+ if not exists(select 1 from public.nextrole_applications where id=current_setting('nr.app')::uuid and snapshot->>'resume_file_name'='Original.pdf' and snapshot->>'resume_version'='1') then raise exception 'Selected immutable snapshot changed'; end if;
+ if not exists(select 1 from storage.objects where bucket_id='nextrole-application-resumes' and name=current_setting('nr.c')||'/'||current_setting('nr.app')||'.pdf') then raise exception 'Submitted object metadata removed with library'; end if;
+end $$;
+reset role;
+rollback;
+select 'PASS: deliberately selected prior version and filename retained in immutable submission after private replacement; employer sees submitted copy only. Storage metadata only, not HTTP byte verification. All fixtures rolled back.' as verification;

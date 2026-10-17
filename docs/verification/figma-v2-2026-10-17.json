@@ -1,0 +1,24 @@
+{
+  "analyzer": "clean",
+  "visualPreviewUsesRealAccounts": false,
+  "publicSiteReferences": 116,
+  "flutterTests": 39,
+  "zip": 15471201,
+  "visualPreviewEntryPoint": "tool/design_preview.dart",
+  "releaseEntryPoint": "lib/main.dart",
+  "screenshots": [
+    "v2-admin-desktop.png",
+    "v2-admin-mobile.png",
+    "v2-admin-queue-mobile.png",
+    "v2-application-desktop.png",
+    "v2-employee-desktop.png",
+    "v2-employee-mobile.png",
+    "v2-employer-desktop.png",
+    "v2-employer-mobile.png",
+    "v2-local-app.png"
+  ],
+  "date": "2026-10-17",
+  "deployed": false,
+  "realLocalAppLoaded": true,
+  "realLocalAppScreenshot": "docs/v2-local-app.png"
+}

@@ -1,0 +1,21 @@
+[build]
+  publish = "build/web"
+
+[[headers]]
+  for = "/main.dart.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Static public pages and /app.html are served as files. Unknown URLs must
+# return a real HTTP 404 rather than rewriting every request to the app.
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404

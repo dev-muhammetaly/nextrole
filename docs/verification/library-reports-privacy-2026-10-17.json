@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-17",
+  "scope": "Private resume library, advanced reports, in-app privacy contact and manual retention review",
+  "flutter": {"analyzer": "passed", "tests_passed": 45, "test_log": "tmp/v3-final-tests.log"},
+  "public_pages": {"local_references_resolved": 170, "analytics": "disabled", "contact_channel": "authenticated in-app requests only", "personal_email_published": false},
+  "database": {
+    "project": "lybcnctwqgaykfyncqor",
+    "applied_migrations": ["20261017143718_nextrole_resume_library_reports_and_privacy.sql", "20261017151829_nextrole_serialize_resume_library_deletion.sql"],
+    "rollback_scripts_passed": ["supabase/verify_library_rollback.sql", "supabase/verify_reports_rollback.sql", "supabase/verify_privacy_rollback.sql", "supabase/verify_selected_resume_rollback.sql", "supabase/verify_resume_delete_rollback.sql"],
+    "checks": ["private version ownership and direct-write denial", "cross-account library metadata and Storage visibility", "active admin assignment and private report work", "stale report revision rejection", "separate public outcome and notification privacy", "owner/admin privacy request access", "suspended owner privacy contact", "anonymous RPC denial", "admin-only retention counts", "selected prior-version snapshot metadata", "family-wide deletion metadata after object removal"],
+    "persistent_rollback_test_users": 0,
+    "storage_test_scope": "Synthetic object metadata; no new actual-byte HTTP transfer verification"
+  },
+  "browser": {
+    "target": "Isolated fictional read-only tool/design_preview.dart",
+    "viewports": ["1440x1000", "390x844"],
+    "checked": ["multiple resume cards and previous version expansion", "privacy request form and response history", "admin reviewer assignment and private investigation editor", "separate private/public report decision fields and reload control"],
+    "screenshots": ["docs/v3-resume-library-desktop.png", "docs/v3-resume-library-mobile.png", "docs/v3-privacy-requests.png", "docs/v3-admin-report.png", "docs/v3-admin-resolution-mobile.png"],
+    "release_route_smoke_test": "The actual lib/main.dart release loaded contact.html and its authenticated /app.html#/privacy-request destination without submitting a request. Screenshot: docs/v3-local-privacy-contact.png"
+  },
+  "limitations": [
+    "Automatic approval review rejected persistent fixture accounts including an admin-enabled account; enhanced real HTTP lifecycle verification was not completed. No privileged fixture accounts were created.",
+    "The earlier 27-check HTTP result remains historical evidence, not a test of all new features.",
+    "Retention and account/data erasure require monthly operator review and verified manual follow-through; no automatic deletion job or automatic export generator exists."
+  ],
+  "release": {"build": "passed: lib/main.dart", "archive": "dist/nextrole-web.zip", "archive_bytes": 15489262, "preview_fixture_marker_in_release": false},
+  "deployment": "Not performed; local release archive only"
+}
